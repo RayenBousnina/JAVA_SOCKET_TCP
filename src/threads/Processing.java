@@ -105,6 +105,31 @@ public class Processing extends Thread{
                                     out.println(sendMsg);
                                 }
 
+                            }else if (cmd.startsWith("TRANSFERT#")){
+                                String transfert = cmd.substring(10);
+                                String[] detailsTrans = transfert.split("#");
+                                String beneficiaire = detailsTrans[0];
+                                String emetteur = detailsTrans[1];
+                                String montantS = detailsTrans[2];
+                                double montant = Double.parseDouble(montantS);
+                                for (Compte compte : Server.compteList){
+                                    if (compte.getProprietaire().getNom().equals(beneficiaire)){
+                                        compte.setMontant(compte.getMontant()+montant);
+                                        out.println("you've received an amount of "+montant+" TND from "+emetteur);
+                                    }
+                                }
+                                for (Compte compte : Server.compteList){
+                                    if (compte.getProprietaire().getNom().equals(emetteur)){
+                                        compte.setMontant(compte.getMontant()-montant);
+                                        out.println("you've sent an amount of "+montant+" TND to "+beneficiaire);
+                                    }
+                                }
+                            }else if (cmd.startsWith("HISTO")){
+                                for (Compte compte : Server.compteList){
+                                    if (compte.getProprietaire().equals(this)){
+                                        out.println(compte.getListOps());
+                                    }
+                                }
                             }
 
                         }
@@ -113,7 +138,7 @@ public class Processing extends Thread{
 
                     }
                 }else {
-                    System.out.println("you must create an account first of all !");
+                    out.println("you must create an account first of all !");
                 }
 
             }

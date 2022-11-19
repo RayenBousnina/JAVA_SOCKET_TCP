@@ -1,10 +1,13 @@
 package models;
 
+import java.util.List;
+
 public class Compte {
     public static int c=1;
     private static int rip;
     private Proprietaire proprietaire;
     private double montant;
+    private List<String> listOps;
     public Compte() {
         this.rip=c++;
     }
@@ -20,7 +23,13 @@ public class Compte {
         this.proprietaire = proprietaire;
     }
 
+    public List<String> getListOps() {
+        return listOps;
+    }
 
+    public void setListOps(List<String> listOps) {
+        this.listOps = listOps;
+    }
 
     public int getRip() {
         return rip;
